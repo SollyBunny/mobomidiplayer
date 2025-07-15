@@ -10,7 +10,7 @@
 
 #include "beep.h"
 
-#define CONSOLE_PATH "/dev/tty0"
+#define CONSOLE_PATH "/dev/console"
 
 static int consoleFd = -1;
 
