@@ -16,5 +16,5 @@ cmake --build . -j
 ## Running
 
 ```sh
-sudo ./mobomidiplayer "../night of nights.mid"
+sudo ./mobomidiplayer "../midi/night of nights.mid"
 ```
