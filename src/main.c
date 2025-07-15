@@ -1,4 +1,3 @@
-#include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
@@ -6,17 +5,15 @@
 #include <tml/tml.h>
 #include <beep/beep.h>
 
+#include "key2freq.h"
+
 const int NOTE_LEN = 100;
 
-static float key2freq(char key) {
-	return 440.0f * pow(2, (((float)key - 69.0f) / 12.0f));
-}
-
 static void sleep(float ms) {
-	timespec time;
-	time.tv_sec = static_cast<time_t>(ms / 1000.0f);
-	time.tv_nsec = static_cast<long>((ms - time.tv_sec * 1000.0f) * 1e6);
-	nanosleep(&time, nullptr);
+	struct timespec time;
+	time.tv_sec = ms / 1000.0f;
+	time.tv_nsec = (ms - time.tv_sec * 1000.0f) * 1e6;
+	nanosleep(&time, NULL);
 }
 
 static bool doNote(const char note, unsigned time) {
