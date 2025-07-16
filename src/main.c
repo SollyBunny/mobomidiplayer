@@ -7,7 +7,8 @@
 
 #include "key2freq.h"
 
-const int NOTE_LEN = 100;
+const int MAX_NOTE_LEN = 200;
+const int MIN_NOTE_LEN = 20;
 
 static void sleep(float ms) {
 	struct timespec time;
@@ -20,22 +21,22 @@ static bool doNote(const char note, unsigned time) {
 	static unsigned lastTime = 0.0f;
 	static char lastNote = 0;
 	int delta = (int)time - (int)lastTime;
-	if (delta < 5) {
-		time = lastTime + 5;
-		delta = 5;
+	if (delta < MIN_NOTE_LEN) {
+		time = lastTime + MIN_NOTE_LEN;
+		delta = MIN_NOTE_LEN;
 	}
 	if (!beepStart(key2freq(lastNote)))
 		return false;
-	if (delta < NOTE_LEN) {
+	if (delta < MAX_NOTE_LEN) {
 		sleep(delta);
 		if (!beepStop())
 			return false;
 	} else {
 		beepStart(key2freq(lastNote));
-		sleep(NOTE_LEN);
+		sleep(MAX_NOTE_LEN);
 		if (!beepStop())
 			return false;
-		sleep(delta - NOTE_LEN);
+		sleep(delta - MAX_NOTE_LEN);
 	}
 	lastNote = note;
 	lastTime = time;
